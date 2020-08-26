@@ -1,0 +1,25 @@
+@import "../../common/styles/scss/index.scss";
+.calender {
+  .calender_header {
+      padding-bottom: 15px;
+      font-size: 18px;
+      font-weight: 700;
+      .week {
+          font-size: 10px;
+          color: $deep_gray;
+      }
+  }
+  .clender_main {
+    display: grid;
+    grid-template: repeat(5, 1fr) / repeat(7, 1fr);
+    justify-items: center;
+    .item,
+    .grid_header {
+      padding: 5px 0;
+    }
+    .grid_header {
+        font-size: 12px;
+        opacity: 0.5;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import App from './views/app';
+import "../src/common/styles/reset.css"
 import 'antd-mobile/dist/antd-mobile.css';
 
 
