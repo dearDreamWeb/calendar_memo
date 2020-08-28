@@ -15,32 +15,46 @@
     grid-template: repeat(5, 1fr) / repeat(7, 1fr);
     grid-gap: 10px;
     justify-items: center;
+    align-items: center;
     .item,
     .grid_header {
       padding: 10px 0;
       font-size: 20px;
-      line-height: 1.2;
       font-weight: bolder;
     }
+    // 日期
     .item {
       width: 100%;
       height: 100%;
       text-align: center;
       border-radius: 50%;
+      // 农历
+      .lunar {
+        font-size: 10px;
+        color: $light_gray;
+        font-weight: bolder;
+      }
     }
+    // 表头，周一到周日
     .grid_header {
       font-size: 12px;
       opacity: 0.5;
     }
+    // 其他月的天数
     .othersMonth {
       color: $light_gray;
     }
+    // 选择的日
     .selectDay {
       background-color: $lighter_gray;
     }
+    // 今天
     .today {
       background-color: #fe8c28;
       color: $white;
+      .lunar {
+        color: $white;
+      }
     }
   }
 }
