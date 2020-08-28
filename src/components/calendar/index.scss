@@ -1,8 +1,9 @@
 @import "../../common/styles/scss/index.scss";
 .calender {
   .calender_header {
+    display: flex;
+    justify-content: space-between;
     padding-bottom: 15px;
-    // text-align: center;
     font-size: 18px;
     font-weight: 700;
     .week {

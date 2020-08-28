@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './index.scss';
-import { DatePicker } from 'antd-mobile';
+import { DatePicker, Button } from 'antd-mobile';
 import GetLunarDay from "../../utils/lunarCalendar";
 
 const Calender = () => {
@@ -11,8 +11,9 @@ const Calender = () => {
     const [week, setWeek] = useState(new Date().getDay());                // 周几
     const [monthStartIndex, setMonthStartIndex] = useState(0);                // 本月第一天是在itemsArr的下标值
     const [selectDay, setSelectDay] = useState(day);                         // 当前选中的日
-    let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 
+
+    let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     let monthDays = new Date(year, month, 0).getDate();         // 本月有多少天
     let lastMonthDays = new Date(year, month - 1, 0).getDate();         // 上个月有多少天
     let weekStart = new Date(year, month - 1, 1).getDay();          // 本月第一天是周几
@@ -32,7 +33,7 @@ const Calender = () => {
     useEffect(() => {
         showLunarDay();
     }, [monthStartIndex])
-
+    console.log(GetLunarDay(2021,2,1))
     // 改变元素的高度和宽度一致
     const changeItemH = () => {
         setTimeout(() => {
@@ -59,18 +60,19 @@ const Calender = () => {
             j++;
         }
         // 计算出本月第一天是在itemsArr的下标值
+
         let nowMonthStartIndex = 0;
-        itemsArr.forEach((item, i) => {
-            if (i > 6 && item.solar === 1) {
+        for (let i = 0; i < itemsArr.length; i++) {
+            if (i > 6 && itemsArr[i].solar === 1) {
                 nowMonthStartIndex = i;
+                break;
             }
-        })
+        }
 
         // 填充下个月
         if (itemsArr.length % 7 !== 0 || itemsArr.includes(undefined)) {
             let k = 1;
             // 下个月开始的位置
-
             let nextMonthStartIndex = nowMonthStartIndex + monthDays;
             // 下个月的出现的天数
             let nextMonthLength = itemsArr.length % 7 !== 0
@@ -87,7 +89,7 @@ const Calender = () => {
     }
 
     // 判断是否是今天
-    const isToday = (num) => {
+    const isToday = num => {
         let isNowYear = new Date().getFullYear() === year ? true : false;
         let isNowMonth = new Date().getMonth() + 1 === month ? true : false;
         let isNowDay = new Date().getDate() === num ? true : false;
@@ -95,7 +97,7 @@ const Calender = () => {
     }
 
     // 选择多少号
-    const selectMonthDay = (index) => {
+    const selectMonthDay = index => {
         if (index >= monthStartIndex && index < monthStartIndex + monthDays) {
             setSelectDay(index - monthStartIndex + 1);
             setWeek(new Date(year, month - 1, index - monthStartIndex + 1).getDay());
@@ -103,7 +105,7 @@ const Calender = () => {
     }
 
     // 选择日期
-    const changeDate = (date) => {
+    const changeDate = date => {
         setYear(date.getFullYear());
         setMonth(date.getMonth() + 1);
         setDay(date.getDate());
@@ -112,8 +114,7 @@ const Calender = () => {
     }
 
     // 判断是几月份
-    const diffMonth = (index) => {
-        console.log(monthStartIndex)
+    const diffMonth = index => {
         if (index >= monthStartIndex && index < monthStartIndex + monthDays) {
             return month;
         } else if (index > 6 && monthStartIndex > index) {
@@ -128,7 +129,6 @@ const Calender = () => {
         itemsArr.forEach((item, index) => {
             if (index > 6) {
                 let readyMonth = diffMonth(index);
-                // console.log(readyMonth)
                 item.lunar = GetLunarDay(year, readyMonth, item.solar)
             }
         })
@@ -136,26 +136,71 @@ const Calender = () => {
     }
 
     // 只要最后两个农历初几
-    const sliceLunar = (item) => {
+    const sliceLunar = item => {
+        if (!item) return "";
         let i = item.indexOf("月");
-        item = item.slice(i+1);
+        item = item.slice(i + 1);
         return item;
+    }
+
+    // 切换到上个月或下个月
+    const changeMonth = type => {
+        let newMonth = type === "left" ? month - 1 : month + 1;
+        let newYear = year;
+        /**
+         * 如果月份大于12，年份加一年，月份改为1
+         * 如果月份小于1，年份减一年，月份改为12
+         */
+        if (newMonth > 12) {
+            newYear++;
+            newMonth = 1;
+        } else if (newMonth < 1) {
+            newYear--;
+            newMonth = 12;
+        }
+        setYear(newYear);
+        setMonth(newMonth);
+        setDay(1);
+        setWeek(new Date(newYear, newMonth - 1, 1).getDay());
+        setItemsArr(new Array(35));
     }
 
     return (
         <div className="calender">
-            <DatePicker
-                mode="date"
-                value={new Date(year, month - 1, day)}
-                onChange={date => changeDate(date)}
-            >
-                <header className="calender_header">
-                    {year}年{month}月
-                <span className="week">{weeks[week]}</span>
-                </header>
-                {/* <List.Item arrow="horizontal">Date</List.Item> */}
-            </DatePicker>
+            {/* 头部 */}
+            <header className="calender_header">
+                {/* 上个月按钮 */}
+                <Button
+                    icon="left"
+                    size="small"
+                    inline={true}
+                    style={{ backgroundColor: "#ffc55a", color: "#fff" }}
+                    onClick={() => changeMonth("left")}
+                />
 
+                {/* 日期 */}
+                <DatePicker
+                    mode="date"
+                    value={new Date(year, month - 1, day)}
+                    onChange={date => changeDate(date)}
+                >
+                    <div className="date">
+                        <span>{year}年{month}月</span>
+                        <span className="week">{weeks[week]}</span>
+                    </div>
+                </DatePicker>
+
+                {/* 下个月按钮 */}
+                <Button
+                    icon="right"
+                    size="small"
+                    inline={true}
+                    style={{ backgroundColor: "#ffc55a", color: "#fff" }}
+                    onClick={() => changeMonth("right")}
+                />
+            </header>
+
+            {/* 主要部分 */}
             <main className="clender_main">
                 {
                     itemsArr.map((item, index) => (
