@@ -3,12 +3,17 @@
   .calender_header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding-bottom: 15px;
     font-size: 18px;
     font-weight: 700;
-    .week {
-      font-size: 10px;
-      color: $light_gray;
+    .date {
+      flex-grow: 1;
+      text-align: center;
+      .week {
+        font-size: 10px;
+        color: $light_gray;
+      }
     }
   }
   .clender_main {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 import { DatePicker, Button } from 'antd-mobile';
 import GetLunarDay from "../../utils/lunarCalendar";
+import "animate.css";
 
 const Calender = () => {
     const [itemsArr, setItemsArr] = useState(new Array(35));
@@ -11,29 +12,39 @@ const Calender = () => {
     const [week, setWeek] = useState(new Date().getDay());                // 周几
     const [monthStartIndex, setMonthStartIndex] = useState(0);                // 本月第一天是在itemsArr的下标值
     const [selectDay, setSelectDay] = useState(day);                         // 当前选中的日
-
+    const [isShow, setIsShow] = useState(true);                           // 日历表格是否显示
+    const [animateState, setAnimateState] = useState(0);                   // 日历动画的状态
 
     let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     let monthDays = new Date(year, month, 0).getDate();         // 本月有多少天
     let lastMonthDays = new Date(year, month - 1, 0).getDate();         // 上个月有多少天
     let weekStart = new Date(year, month - 1, 1).getDay();          // 本月第一天是周几
 
-    useEffect(() => {
-        changeItemH();
-    }, []);
+    // useEffect(() => {
+    //     changeItemH();
+    // }, []);
 
     useEffect(() => {
         fillDate();
+        showLunarDay();
+        changeItemH();
     }, [year, month, day]);
 
+    // 当日变化，选中的日也变化
     useEffect(() => {
         setSelectDay(day);
     }, [day])
 
+    // 当每月的开始的下标值变化了说明日期变化了，农历也跟着变化
     useEffect(() => {
         showLunarDay();
     }, [monthStartIndex])
-    console.log(GetLunarDay(2021,2,1))
+
+    // 当isShow改变时，把isShow变成true，实现动画效果
+    useEffect(() => {
+        setIsShow(true);
+    }, [isShow])
+
     // 改变元素的高度和宽度一致
     const changeItemH = () => {
         setTimeout(() => {
@@ -42,7 +53,7 @@ const Calender = () => {
             items.forEach(el => {
                 el.style.height = itemW;
             })
-        }, 500)
+        }, 50)
     }
 
     // 把日期填充进数组
@@ -111,6 +122,7 @@ const Calender = () => {
         setDay(date.getDate());
         setWeek(date.getDay());
         setItemsArr(new Array(35));
+        setAnimateState(0)
     }
 
     // 判断是几月份
@@ -119,7 +131,7 @@ const Calender = () => {
             return month;
         } else if (index > 6 && monthStartIndex > index) {
             return month - 1;
-        } else if (index > monthStartIndex + monthDays) {
+        } else if (index >= monthStartIndex + monthDays) {
             return month + 1;
         }
     }
@@ -129,7 +141,8 @@ const Calender = () => {
         itemsArr.forEach((item, index) => {
             if (index > 6) {
                 let readyMonth = diffMonth(index);
-                item.lunar = GetLunarDay(year, readyMonth, item.solar)
+                let resultObj = GetLunarDay(year, readyMonth, item.solar);
+                item.lunar = `${resultObj.gzYear}${resultObj.Animal}年 ${resultObj.gzMonth}月 ${resultObj.gzDay}日 农历${resultObj.IMonthCn}${resultObj.IDayCn}`
             }
         })
         setItemsArr([...itemsArr]);
@@ -138,7 +151,7 @@ const Calender = () => {
     // 只要最后两个农历初几
     const sliceLunar = item => {
         if (!item) return "";
-        let i = item.indexOf("月");
+        let i = item.lastIndexOf("月");
         item = item.slice(i + 1);
         return item;
     }
@@ -158,6 +171,8 @@ const Calender = () => {
             newYear--;
             newMonth = 12;
         }
+        type === "left" ? setAnimateState(1) : setAnimateState(2);
+        setIsShow(!isShow);
         setYear(newYear);
         setMonth(newMonth);
         setDay(1);
@@ -179,17 +194,18 @@ const Calender = () => {
                 />
 
                 {/* 日期 */}
-                <DatePicker
-                    mode="date"
-                    value={new Date(year, month - 1, day)}
-                    onChange={date => changeDate(date)}
-                >
-                    <div className="date">
-                        <span>{year}年{month}月</span>
-                        <span className="week">{weeks[week]}</span>
-                    </div>
-                </DatePicker>
-
+                <div className="date">
+                    <DatePicker
+                        mode="date"
+                        value={new Date(year, month - 1, day)}
+                        onChange={date => changeDate(date)}
+                    >
+                        <div>
+                            <span>{year}年{month}月</span>
+                            <span className="week">{weeks[week]}</span>
+                        </div>
+                    </DatePicker>
+                </div>
                 {/* 下个月按钮 */}
                 <Button
                     icon="right"
@@ -201,7 +217,17 @@ const Calender = () => {
             </header>
 
             {/* 主要部分 */}
-            <main className="clender_main">
+            <main
+                className={`clender_main animate__animated ${
+                    animateState === 0
+                        ? "animate__flipInX"
+                        : animateState === 1
+                            ? "animate__lightSpeedInLeft"
+                            : "animate__lightSpeedInRight"
+                    }`
+                }
+                style={{ display: isShow ? "grid" : "none" }}
+            >
                 {
                     itemsArr.map((item, index) => (
                         <div
