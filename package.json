@@ -9,9 +9,11 @@
     "animate.css": "^4.1.0",
     "antd-mobile": "^2.3.3",
     "node-sass": "^4.14.1",
+    "porp-types": "^0.0.1-security",
     "react": "^16.13.1",
     "react-amap": "^1.2.8",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3"
   },
   "scripts": {

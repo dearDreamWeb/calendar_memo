@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import './index.scss';
 import { DatePicker, Button } from 'antd-mobile';
 import GetLunarDay from "../../utils/lunarCalendar";
 import "animate.css";
+import PropTypes from 'prop-types';
 
-const Calender = () => {
+const Calender = props => {
+
+    Calender.propTypes = {
+        selectDate: PropTypes.func.isRequired
+    }
+
     const [itemsArr, setItemsArr] = useState(new Array(35));
     const [year, setYear] = useState(new Date().getFullYear());           // 年
     const [month, setMonth] = useState(new Date().getMonth() + 1);        // 月
@@ -20,30 +27,35 @@ const Calender = () => {
     let lastMonthDays = new Date(year, month - 1, 0).getDate();         // 上个月有多少天
     let weekStart = new Date(year, month - 1, 1).getDay();          // 本月第一天是周几
 
-    // useEffect(() => {
-    //     changeItemH();
-    // }, []);
 
     useEffect(() => {
         fillDate();
         showLunarDay();
         changeItemH();
+        setSelectDay(day);
     }, [year, month, day]);
 
-    // 当日变化，选中的日也变化
-    useEffect(() => {
-        setSelectDay(day);
-    }, [day])
 
     // 当每月的开始的下标值变化了说明日期变化了，农历也跟着变化
     useEffect(() => {
         showLunarDay();
     }, [monthStartIndex])
 
+
     // 当isShow改变时，把isShow变成true，实现动画效果
     useEffect(() => {
         setIsShow(true);
     }, [isShow])
+
+    // 向父元素传递日期数据
+    useEffect(() => {
+        props.selectDate(Object.assign(
+            { ...itemsArr[selectDay + monthStartIndex - 1] },
+            { solar: `${year}年${month}月${day}日${weeks[week]}` }
+        ))
+        // console.log(selectDay, itemsArr[selectDay + monthStartIndex - 1]);
+    }, [year, month, selectDay, monthStartIndex]);
+
 
     // 改变元素的高度和宽度一致
     const changeItemH = () => {
@@ -234,7 +246,8 @@ const Calender = () => {
                             onClick={() => selectMonthDay(index)}
                             className={
                                 // 区分 表头和表格
-                                `${index > 6
+                                `animate__animated ${
+                                index > 6
                                     ? "item"
                                     : "grid_header"
                                 } ${
@@ -246,8 +259,8 @@ const Calender = () => {
                                 // 区分是不是已选中，再判断是不是今天
                                 selectDay === index - monthStartIndex + 1 && index >= monthStartIndex && index < monthStartIndex + monthDays
                                     ? isToday(item.solar)
-                                        ? "today"
-                                        : "selectDay"
+                                        ? "today animate__rubberBand"
+                                        : "selectDay animate__rubberBand"
                                     : ""
                                 }`
                             }
@@ -263,4 +276,4 @@ const Calender = () => {
         </div>
     )
 }
-export default Calender;
+export default withRouter(Calender);
