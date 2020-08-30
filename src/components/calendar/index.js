@@ -5,6 +5,7 @@ import { DatePicker, Button } from 'antd-mobile';
 import GetLunarDay from "../../utils/lunarCalendar";
 import "animate.css";
 import PropTypes from 'prop-types';
+import Weather from "../weather";
 
 const Calender = props => {
 
@@ -17,10 +18,11 @@ const Calender = props => {
     const [month, setMonth] = useState(new Date().getMonth() + 1);        // 月
     const [day, setDay] = useState(new Date().getDate());                 // 日
     const [week, setWeek] = useState(new Date().getDay());                // 周几
-    const [monthStartIndex, setMonthStartIndex] = useState(0);                // 本月第一天是在itemsArr的下标值
+    const [monthStartIndex, setMonthStartIndex] = useState(0);           // 本月第一天是在itemsArr的下标值
     const [selectDay, setSelectDay] = useState(day);                         // 当前选中的日
     const [isShow, setIsShow] = useState(true);                           // 日历表格是否显示
-    const [animateState, setAnimateState] = useState(0);                   // 日历动画的状态
+    const [animateState, setAnimateState] = useState(0);                   // 日历动画的状态,0,1,2三种过渡动画
+    const [resultDate, setResultDate] = useState({});                     // 最终整合版日期
 
     let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     let monthDays = new Date(year, month, 0).getDate();         // 本月有多少天
@@ -47,14 +49,18 @@ const Calender = props => {
         setIsShow(true);
     }, [isShow])
 
-    // 向父元素传递日期数据
+    // 更新resultDate数据
     useEffect(() => {
-        props.selectDate(Object.assign(
+        setResultDate(Object.assign(
             { ...itemsArr[selectDay + monthStartIndex - 1] },
             { solar: `${year}年${month}月${day}日${weeks[week]}` }
         ))
-        // console.log(selectDay, itemsArr[selectDay + monthStartIndex - 1]);
     }, [year, month, selectDay, monthStartIndex]);
+
+    // 向父元素传递日期数据
+    useEffect(() => {
+        props.selectDate(resultDate)
+    }, [resultDate])
 
 
     // 改变元素的高度和宽度一致
@@ -273,6 +279,9 @@ const Calender = props => {
                     )
                 }
             </main>
+
+            {/* 天气和农历 */}
+            <Weather date={resultDate} isToday={isToday(selectDay)} />
         </div>
     )
 }

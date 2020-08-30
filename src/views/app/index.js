@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './index.scss';
 import { WingBlank } from 'antd-mobile';
 import Calender from "../../components/calendar";
+import DiyFooter from "../../components/footer";
 
 const path = require("path");
 function App() {
@@ -15,17 +16,6 @@ function App() {
     setDate(data);
   }
 
-  // function init() {
-  //   window.AMap.plugin('AMap.CitySearch', function () {
-  //     var citySearch = new window.AMap.CitySearch()
-  //     citySearch.getLocalCity(function (status, result) {
-  //       if (status === 'complete' && result.info === 'OK') {
-  //         // 查询成功，result即为当前所在城市信息
-  //         console.log(result)
-  //       }
-  //     })
-  //   })
-  // }
 
   return (
     <div className="App">
@@ -44,6 +34,14 @@ function App() {
             )} />
           </Switch>
         </Router>
+
+        {/* 底部组件 */}
+        <Router>
+          <Switch>
+            <Route path="/" component={DiyFooter} />
+          </Switch>
+        </Router>
+
       </WingBlank>
     </div>
   );

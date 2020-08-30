@@ -1,0 +1,25 @@
+@import "../../common/styles/scss/index.scss";
+.weather {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px 10px;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 0px #afadad;
+  .left,
+  .right {
+    font-family: serif;
+    font-size: 13px;
+    .info_top,
+    .info_bottom {
+      font-weight: bold;
+    }
+    .info_top {
+      padding-bottom: 10px;
+    }
+    .info_bottom {
+      color: $light_gray;
+    }
+  }
+}

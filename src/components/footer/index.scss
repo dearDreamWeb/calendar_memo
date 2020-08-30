@@ -1,0 +1,25 @@
+@import "../../common/styles/scss/index.scss";
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 10px 0;
+  width: 100vw;
+  background-color: $white;
+  .lists {
+    display: flex;
+    justify-content: space-between;
+    .lists_item {
+      text-align: center;
+      color: $light_black;
+      .icon {
+        padding-bottom: 5px;
+        font-size: 22px;
+      }
+    }
+    // 选中样式
+    .selected {
+      color: $theme_color;
+    }
+  }
+}
