@@ -1,12 +1,14 @@
 @import "../../common/styles/scss/index.scss";
 .footer {
   position: fixed;
+  z-index: 1;
   left: 0;
   bottom: 0;
   padding: 10px 80px;
   width: 100vw;
   height: 60px;
   background-color: $white;
+  border-top: $border_lightBlack;
 
   // 添加按钮
   .add_btn {
@@ -19,6 +21,7 @@
     width: 70px;
     height: 70px;
     background: $white;
+    border: $border_lightBlack;
     border-radius: 50%;
     .btn {
       position: relative;

@@ -1,0 +1,53 @@
+@import "../../common/styles/scss/index.scss";
+
+.add_memo {
+  position: absolute;
+  left: 0;
+  .container {
+    position: fixed;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $white;
+
+    // 头部
+    .memo_header {
+      padding: 10px 0;
+      border-bottom: $border_lightBlack;
+      .title {
+        font-size: 24px;
+        font-family: cursive;
+        font-weight: 100;
+      }
+      .icons {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+        color: $light_gray;
+        text-align: center;
+        .icon_item {
+          font-size: 22px;
+        }
+        .selected {
+          color: $theme_color;
+        }
+        .text {
+          padding-top: 5px;
+        }
+      }
+    }
+
+    // 主体部分
+    .memo_main {
+      padding-top: 20px;
+      .mark {
+        background: $lighter_gray;
+        border-radius: 10px;
+      }
+      // 修改antd-mobile中的样式
+      .am-list-item .am-list-line .am-list-extra {
+        flex-basis: auto;
+      }
+    }
+  }
+}

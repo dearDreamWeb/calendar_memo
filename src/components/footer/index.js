@@ -3,18 +3,12 @@ import "./index.scss";
 import { WingBlank } from 'antd-mobile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBookmark } from '@fortawesome/fontawesome-free-solid';
-import PropTypes from 'prop-types';
 
-const Footer = props => {
-
-    Footer.propTypes = {
-        date: PropTypes.object.isRequired
-    }
-
+const Footer = () => {
     const [locationPath, setLocationPath] = useState("/");  //当前路径
     const lists = [
         {
-            path: "/",
+            path: "/home",
             icon: faHome,
             text: "首页"
         },
@@ -27,20 +21,23 @@ const Footer = props => {
 
 
     useEffect(() => {
-        setLocationPath(props.location.pathname);
+        setLocationPath(window.location.pathname);
     }, [])
 
     // 跳转页面
     const jumpPage = path => {
-        props.history.push(path);
+        window.location.href = window.location.origin + path;
         setLocationPath(path);
     }
 
     return (
         <footer className="footer">
-            {/* 添加按钮 */}
+            {/* 添加按钮  只在home路由中显示 */}
             <div className="add_btn">
-                <div className="btn"></div>
+                <div
+                    className="btn"
+                    onClick={() => jumpPage("/addmemo")}
+                ></div>
             </div>
 
             {/* 标签栏 */}
@@ -50,7 +47,7 @@ const Footer = props => {
                         <li
                             key={index}
                             className={`lists_item ${
-                                locationPath == item.path
+                                locationPath === item.path
                                     ? "selected"
                                     : ""
                                 }`}
