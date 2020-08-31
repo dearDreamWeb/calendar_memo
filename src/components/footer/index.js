@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import "./index.scss";
 import { WingBlank } from 'antd-mobile';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faBookmark } from '@fortawesome/fontawesome-free-solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faBookmark } from '@fortawesome/fontawesome-free-solid';
+import PropTypes from 'prop-types';
 
 const Footer = props => {
-    const [locationPath, setLocationPath] = useState("");  //当前路径
+
+    Footer.propTypes = {
+        date: PropTypes.object.isRequired
+    }
+
+    const [locationPath, setLocationPath] = useState("/");  //当前路径
     const lists = [
         {
             path: "/",
@@ -32,6 +38,12 @@ const Footer = props => {
 
     return (
         <footer className="footer">
+            {/* 添加按钮 */}
+            <div className="add_btn">
+                <div className="btn"></div>
+            </div>
+
+            {/* 标签栏 */}
             <WingBlank>
                 <ul className="lists">
                     {lists.map((item, index) => (

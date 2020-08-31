@@ -5,7 +5,6 @@ import { WingBlank } from 'antd-mobile';
 import Calender from "../../components/calendar";
 import DiyFooter from "../../components/footer";
 
-const path = require("path");
 function App() {
   const [date, setDate] = useState({});
   useEffect(() => {
@@ -22,8 +21,8 @@ function App() {
       <WingBlank>
         <header className="header">
           <h1 className="title">
-            橙子
-          <img src={require("../../common/images/orange.png")} width="40px" />
+          橙子
+          <img src={require("../../common/images/orange.png")} width="40px" alt="logo" />
           日历
           </h1>
         </header>
@@ -37,9 +36,7 @@ function App() {
 
         {/* 底部组件 */}
         <Router>
-          <Switch>
             <Route path="/" component={DiyFooter} />
-          </Switch>
         </Router>
 
       </WingBlank>

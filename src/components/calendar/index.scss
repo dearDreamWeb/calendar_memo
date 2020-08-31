@@ -1,5 +1,6 @@
 @import "../../common/styles/scss/index.scss";
 .calender {
+  // 头部
   .calender_header {
     display: flex;
     justify-content: space-between;
@@ -16,6 +17,7 @@
       }
     }
   }
+  // 日历主体部分
   .clender_main {
     display: grid;
     grid-template: repeat(5, 1fr) / repeat(7, 1fr);
@@ -24,7 +26,10 @@
     align-items: center;
     .item,
     .grid_header {
-      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-size: 20px;
       font-weight: bolder;
     }
