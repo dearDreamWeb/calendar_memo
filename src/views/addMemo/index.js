@@ -1,38 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { WingBlank, InputItem, DatePicker, List, Toast } from 'antd-mobile';
+import React, { useState, useEffect, useContext } from "react";
+import { WingBlank, InputItem, DatePicker, List, Toast, Button } from 'antd-mobile';
 import "animate.css";
 import "./index.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBirthdayCake, faStar, faCertificate, faBell } from '@fortawesome/fontawesome-free-solid';
+import { ContextData } from "../../useReducer";
 
 const AddMemo = props => {
 
     const [dateStart, setDateStart] = useState(new Date());  // 开始时间
     const [dateEnd, setDateEnd] = useState(new Date());     // 结束时间
     const [selectedIndex, setSelectedIndex] = useState(0);  // 日期
-    const [inputVal, setInputVal] = useState("");  // 日期
+    const [inputVal, setInputVal] = useState("");           // 备注信息
 
-    //icon图标
-    const icons = [
-        {
-            icon: faStar,
-            text: "日程"
-        },
-        {
-            icon: faBirthdayCake,
-            text: "生日"
-        },
-        {
-            icon: faBell,
-            text: "纪念日"
-        },
-        {
-            icon: faCertificate,
-            text: "其他"
-        }];
+    // 获取到useContext中存的值
+    const { state, dispatch } = useContext(ContextData);
 
     useEffect(() => {
-        initDateEnd()
+        initDateEnd();
     }, [])
 
     // 初始化结束时间
@@ -79,9 +63,30 @@ const AddMemo = props => {
     const changeInputVal = val => {
         if (val.length < 16) {
             setInputVal(val);
-        }else{
+        } else {
             Toast.info("备注信息不能超过15个字数")
         }
+    }
+
+    // 提交数据
+    const addData = () => {
+        let reg = /^\s+$/;
+        if (inputVal === "" || reg.test(inputVal)) {
+            Toast.info("请填写备注")
+            return;
+        }
+        let newItem = {
+            id: new Date().getTime(),    // id值
+            isFinished: false,           // 是否完成 
+            tagIndex: selectedIndex,
+            dateStart,
+            dateEnd,
+            text: inputVal
+        };
+        dispatch({
+            type: "add",
+            data: newItem
+        });
     }
 
     return (
@@ -93,7 +98,7 @@ const AddMemo = props => {
                         <p className="title">创建备忘录</p>
                         {/* 图标 */}
                         <div className="icons">
-                            {icons.map((item, index) => (
+                            {state.icons.map((item, index) => (
                                 <div key={index}
                                     className={selectedIndex === index
                                         ? "selected"
@@ -121,7 +126,7 @@ const AddMemo = props => {
                             className="mark"
                             placeholder="请输入备注"
                         />
-                        {/* 开始时间和结束时间 */}
+                        {/* 列表 */}
                         <List>
                             {/* 开始时间 */}
                             <DatePicker
@@ -138,6 +143,26 @@ const AddMemo = props => {
                             >
                                 <List.Item arrow="horizontal">结束时间</List.Item>
                             </DatePicker>
+
+                            {/* 确认按钮 */}
+                            <List.Item>
+                                <Button
+                                    type="primary"
+                                    onClick={() => addData()}
+                                >确认</Button>
+                            </List.Item>
+
+                            {/* 返回首页按钮 */}
+                            <List.Item>
+                                <Button
+                                    type="warning"
+                                    onClick={() => {
+                                        props.history.push("/");
+                                        Toast.success("返回首页成功", 1)
+                                    }}
+                                >返回首页</Button>
+                            </List.Item>
+
                         </List>
 
                     </section>
