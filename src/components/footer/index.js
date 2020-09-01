@@ -4,6 +4,7 @@ import { WingBlank } from 'antd-mobile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBookmark } from '@fortawesome/fontawesome-free-solid';
 
+
 const Footer = () => {
     const [locationPath, setLocationPath] = useState("/");  //当前路径
     const lists = [

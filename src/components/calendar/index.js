@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import './index.scss';
 import { DatePicker, Button } from 'antd-mobile';
@@ -6,6 +6,7 @@ import GetLunarDay from "../../utils/lunarCalendar";
 import "animate.css";
 import PropTypes from 'prop-types';
 import Weather from "../weather";
+import { ContextData } from "../../useReducer";
 
 const Calender = props => {
 
@@ -13,21 +14,24 @@ const Calender = props => {
         selectDate: PropTypes.func.isRequired
     }
 
+    // 获取到useContext中存的值
+    const { state, dispatch } = useContext(ContextData);
+
     const [itemsArr, setItemsArr] = useState(new Array(35));
     const [year, setYear] = useState(new Date().getFullYear());           // 年
     const [month, setMonth] = useState(new Date().getMonth() + 1);        // 月
     const [day, setDay] = useState(new Date().getDate());                 // 日
     const [week, setWeek] = useState(new Date().getDay());                // 周几
-    const [monthStartIndex, setMonthStartIndex] = useState(0);           // 本月第一天是在itemsArr的下标值
-    const [selectDay, setSelectDay] = useState(day);                         // 当前选中的日
+    const [monthStartIndex, setMonthStartIndex] = useState(0);            // 本月第一天是在itemsArr的下标值
+    const [selectDay, setSelectDay] = useState(day);                      // 当前选中的日
     const [isShow, setIsShow] = useState(true);                           // 日历表格是否显示
-    const [animateState, setAnimateState] = useState(0);                   // 日历动画的状态,0,1,2三种过渡动画
+    const [animateState, setAnimateState] = useState(0);                  // 日历动画的状态,0,1,2三种过渡动画
     const [resultDate, setResultDate] = useState({});                     // 最终整合版日期
 
     let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-    let monthDays = new Date(year, month, 0).getDate();         // 本月有多少天
+    let monthDays = new Date(year, month, 0).getDate();                 // 本月有多少天
     let lastMonthDays = new Date(year, month - 1, 0).getDate();         // 上个月有多少天
-    let weekStart = new Date(year, month - 1, 1).getDay();          // 本月第一天是周几
+    let weekStart = new Date(year, month - 1, 1).getDay();              // 本月第一天是周几
 
 
     useEffect(() => {
@@ -35,6 +39,7 @@ const Calender = props => {
         showLunarDay();
         changeItemH();
         setSelectDay(day);
+        findMark();
     }, [year, month, day]);
 
 
@@ -72,6 +77,15 @@ const Calender = props => {
                 el.style.height = itemW;
             })
         }, 50)
+    }
+
+    // 遍历数据找到在本月的时间的备忘录
+    const findMark = () => {
+        let MonthStartTimes = new Date(year, month, 1).getTime;
+        let MonthEndTimes = new Date(year, month + 1, 1).getTime;
+        let arr = state.memoData.filter(item => {
+            
+        })
     }
 
     // 把日期填充进数组

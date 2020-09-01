@@ -53,7 +53,7 @@ function App() {
           </Router>
 
           {/* 底部组件 */}
-          <DiyFooter />
+          <DiyFooter date={date} />
 
         </WingBlank>
       </div>

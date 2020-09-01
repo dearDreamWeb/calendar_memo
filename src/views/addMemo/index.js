@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ContextData } from "../../useReducer";
 
 const AddMemo = props => {
-
+    // const [date, setDate] = useState({});
     const [dateStart, setDateStart] = useState(new Date());  // 开始时间
     const [dateEnd, setDateEnd] = useState(new Date());     // 结束时间
     const [selectedIndex, setSelectedIndex] = useState(0);  // 日期
@@ -18,6 +18,7 @@ const AddMemo = props => {
     useEffect(() => {
         initDateEnd();
     }, [])
+
 
     // 初始化结束时间
     const initDateEnd = () => {
@@ -87,6 +88,8 @@ const AddMemo = props => {
             type: "add",
             data: newItem
         });
+        props.history.push("/");
+        Toast.success("新建备忘录成功", 1);
     }
 
     return (
@@ -130,6 +133,7 @@ const AddMemo = props => {
                         <List>
                             {/* 开始时间 */}
                             <DatePicker
+                                mode="time"
                                 value={dateStart}
                                 onChange={date => changeDate(date, true)}
                             >
@@ -138,6 +142,7 @@ const AddMemo = props => {
 
                             {/* 结束时间 */}
                             <DatePicker
+                                mode="time"
                                 value={dateEnd}
                                 onChange={date => changeDate(date, false)}
                             >

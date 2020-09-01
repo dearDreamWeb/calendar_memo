@@ -1,5 +1,8 @@
 import { createContext } from "react";
 import { faBirthdayCake, faStar, faCertificate, faBell } from '@fortawesome/fontawesome-free-solid';
+import Store from "../utils/webStorage.js"; //引入webStorage工具
+
+const $store = new Store("localStorage");//实例化Store
 const initData = {};//初始数据
 //icon图标数据
 initData.icons = [
@@ -21,8 +24,8 @@ initData.icons = [
     }];
 
 // 备忘录数据
-initData.memoData = window.localStorage.getItem("memoData")
-    ? JSON.parse(window.localStorage.getItem("memoData"))
+initData.memoData = $store.getItem("memoData")
+    ? $store.getItem("memoData")
     : [];
 
 // 派发事件
@@ -32,11 +35,8 @@ const reducer = (state, action) => {
         case "add":
             let newItem = action.data;
             state.memoData.push(newItem);
+            $store.setItem("memoData", state.memoData);
             return { ...state }
-        case "sub":
-            return { ...state, count: state.count - 1 };
-        case "change":
-            return { ...state, count: action.changeCount };
         default:
             return state
     }
