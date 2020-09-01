@@ -28,6 +28,11 @@ initData.memoData = $store.getItem("memoData")
     ? $store.getItem("memoData")
     : [];
 
+// 选中的时间
+initData.selectedDate = $store.getItem("selectedDate")
+    ? $store.getItem("selectedDate")
+    : {};
+
 // 派发事件
 const reducer = (state, action) => {
     switch (action.type) {
@@ -36,6 +41,12 @@ const reducer = (state, action) => {
             let newItem = action.data;
             state.memoData.push(newItem);
             $store.setItem("memoData", state.memoData);
+            return { ...state }
+            
+        // 更新选中的日期
+        case "updateDate":
+            state.selectedDate = action.data;
+            $store.setItem("selectedDate", state.selectedDate);
             return { ...state }
         default:
             return state

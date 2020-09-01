@@ -10,15 +10,8 @@ import AddMemo from "../../views/addMemo";      // 添加备忘录
 
 function App() {
 
-  const [date, setDate] = useState({});
   //  获取是state和dispatch 
   const [state, dispatch] = useReducer(reducer, initData);
-
-  // 接收子组件传过来的日期数据
-  const getSelectDate = data => {
-    setDate(data);
-  }
-
 
   return (
     // 获取到useContext中存的值
@@ -38,13 +31,9 @@ function App() {
           <Router>
             <Switch>
 
-              <Route exact path="/home" render={() => (
-                <Calender selectDate={data => getSelectDate(data)} />
-              )} />
+              <Route exact path="/home" component={Calender} />
 
-              <Route path="/undone" render={() => (
-                <Undone date={date} />
-              )} />
+              <Route path="/undone" component={Undone} />
 
               <Route path="/addmemo" component={AddMemo} />
 
@@ -53,7 +42,7 @@ function App() {
           </Router>
 
           {/* 底部组件 */}
-          <DiyFooter date={date} />
+          <DiyFooter />
 
         </WingBlank>
       </div>

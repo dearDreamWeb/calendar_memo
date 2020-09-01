@@ -6,14 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ContextData } from "../../useReducer";
 
 const AddMemo = props => {
+    // 获取到useContext中存的值
+    const { state, dispatch } = useContext(ContextData);
+
     // const [date, setDate] = useState({});
     const [dateStart, setDateStart] = useState(new Date());  // 开始时间
-    const [dateEnd, setDateEnd] = useState(new Date());     // 结束时间
+    const [dateEnd, setDateEnd] = useState(dateStart);     // 结束时间
     const [selectedIndex, setSelectedIndex] = useState(0);  // 日期
     const [inputVal, setInputVal] = useState("");           // 备注信息
 
-    // 获取到useContext中存的值
-    const { state, dispatch } = useContext(ContextData);
 
     useEffect(() => {
         initDateEnd();
@@ -22,6 +23,7 @@ const AddMemo = props => {
 
     // 初始化结束时间
     const initDateEnd = () => {
+        if (dateStart.getHours() >= 23) return;
         let hour_millisecond = 1000 * 60 * 60; // 一个小时的毫秒数
         let times = new Date().getTime();
         let result = times + hour_millisecond;
@@ -32,31 +34,22 @@ const AddMemo = props => {
      * 改变时间 
      * @param {*} date  开始或结束时间
      * @param {*} flag  为true改变开始时间；false改变结束时间
-     * 当flag为true时，如果开始时间大于结束时间，开始时间变成比结束时间少一小时
-     * 当flag为false时，如果结束时间小于于开始时间，结束时间变成比开始时间多一小时
+     * 当flag为true时，如果开始时间大于结束时间，开始时间等于结束时间
+     * 当flag为false时，如果结束时间小于于开始时间，结束时间等于开始时间
      */
     const changeDate = (date, flag) => {
         let dateStartTimes = new Date(dateStart).getTime(); // 开始时间的毫秒数
         let dateEndTimes = new Date(dateEnd).getTime();  // 结束时间的毫秒数
         if (flag) {
             dateStartTimes = new Date(date).getTime();
-            if (dateStartTimes < dateEndTimes) {
-                setDateStart(date);
-            } else {
-                let hour_millisecond = 1000 * 60 * 60; // 一个小时的毫秒数
-                let result = dateEndTimes - hour_millisecond;
-                setDateStart(new Date(result));
-            }
+            dateStartTimes < dateEndTimes
+                ? setDateStart(date)
+                : setDateStart(dateEnd)
         } else {
             dateEndTimes = new Date(date).getTime();
-            if (dateStartTimes < dateEndTimes) {
-                setDateEnd(date);
-            } else {
-                console.log(22)
-                let hour_millisecond = 1000 * 60 * 60; // 一个小时的毫秒数
-                let result = dateStartTimes + hour_millisecond;
-                setDateEnd(new Date(result));
-            }
+            dateStartTimes < dateEndTimes
+                ? setDateEnd(date)
+                : setDateEnd(dateStart)
         }
     }
 
@@ -71,6 +64,11 @@ const AddMemo = props => {
 
     // 提交数据
     const addData = () => {
+        // 将 localStorage中的selectedDate的选中日期的毫秒数times转换成正常日期
+        let _date = new Date(state.selectedDate.times);
+        let year = _date.getFullYear();
+        let month = _date.getMonth();
+        let day = _date.getDate();
         let reg = /^\s+$/;
         if (inputVal === "" || reg.test(inputVal)) {
             Toast.info("请填写备注")
@@ -80,8 +78,8 @@ const AddMemo = props => {
             id: new Date().getTime(),    // id值
             isFinished: false,           // 是否完成 
             tagIndex: selectedIndex,
-            dateStart,
-            dateEnd,
+            dateStart: new Date(year, month, day, dateStart.getHours(), dateStart.getMinutes()),
+            dateEnd: new Date(year, month, day, dateEnd.getHours(), dateEnd.getMinutes()),
             text: inputVal
         };
         dispatch({

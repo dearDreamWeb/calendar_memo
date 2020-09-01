@@ -4,15 +4,11 @@ import './index.scss';
 import { DatePicker, Button } from 'antd-mobile';
 import GetLunarDay from "../../utils/lunarCalendar";
 import "animate.css";
-import PropTypes from 'prop-types';
 import Weather from "../weather";
 import { ContextData } from "../../useReducer";
 
-const Calender = props => {
+const Calender = () => {
 
-    Calender.propTypes = {
-        selectDate: PropTypes.func.isRequired
-    }
 
     // 获取到useContext中存的值
     const { state, dispatch } = useContext(ContextData);
@@ -58,13 +54,19 @@ const Calender = props => {
     useEffect(() => {
         setResultDate(Object.assign(
             { ...itemsArr[selectDay + monthStartIndex - 1] },
-            { solar: `${year}年${month}月${day}日${weeks[week]}` }
+            {
+                solar: `${year}年${month}月${selectDay}日${weeks[week]}`,
+                times: new Date(year, month - 1, selectDay).getTime()
+            }
         ))
     }, [year, month, selectDay, monthStartIndex]);
 
-    // 向父元素传递日期数据
+    // 向useReducer传递日期数据
     useEffect(() => {
-        props.selectDate(resultDate)
+        dispatch({
+            type: "updateDate",
+            data: resultDate
+        })
     }, [resultDate])
 
 
@@ -81,8 +83,8 @@ const Calender = props => {
 
     // 遍历数据找到在本月的时间的备忘录
     const findMark = () => {
-        let MonthStartTimes = new Date(year, month, 1).getTime;
-        let MonthEndTimes = new Date(year, month + 1, 1).getTime;
+        let MonthStartTimes = new Date(year, month, 1).getTime();
+        let MonthEndTimes = new Date(year, month + 1, 1).getTime();
         let arr = state.memoData.filter(item => {
             
         })
