@@ -5,7 +5,7 @@ import { WingBlank } from 'antd-mobile';
 import { reducer, ContextData, initData } from "../../useReducer" //引入useReducer文件
 import Calender from "../../components/calendar";  // 日历组件
 import DiyFooter from "../../components/footer";   // 底部组件
-import Undone from "../../views/undone";      // 待办
+import Memo from "../../views/memo";      // 待办
 import AddMemo from "../../views/addMemo";      // 添加备忘录
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
 
               <Route exact path="/home" component={Calender} />
 
-              <Route path="/undone" component={Undone} />
+              <Route path="/memo" component={Memo} />
 
               <Route path="/addmemo" component={AddMemo} />
 

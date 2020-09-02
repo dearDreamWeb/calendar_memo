@@ -42,11 +42,26 @@ const reducer = (state, action) => {
             state.memoData.push(newItem);
             $store.setItem("memoData", state.memoData);
             return { ...state }
-            
+
         // 更新选中的日期
         case "updateDate":
             state.selectedDate = action.data;
             $store.setItem("selectedDate", state.selectedDate);
+            return { ...state }
+
+        // 改变备忘录完成状态
+        case "changeIsFinish":
+            let changeItem = action.data.item; //要修改的数据
+            let itemIndex = 0; 
+            // 找到要修改的数据的下标值，并赋值给itemIndex
+            state.memoData.forEach((item, index) => {
+                if (item.id === changeItem.id) {
+                    itemIndex = index;
+                }
+            })
+            changeItem.isFinished = !changeItem.isFinished;
+            state.memoData[itemIndex] = changeItem;
+            $store.setItem("memoData", [...state.memoData]);
             return { ...state }
         default:
             return state

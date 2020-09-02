@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import "./index.scss";
 
-const Undone = props => {
+const Memo = props => {
 
-    Undone.propTypes = {
+    Memo.propTypes = {
         date: PropTypes.object.isRequired
     }
     const [date, setDate] = useState({});  // 日期
@@ -16,8 +16,8 @@ const Undone = props => {
 
     return (
         <div className="undone">
-            undone
+            Memo
         </div>
     )
 }
-export default Undone;
+export default Memo;

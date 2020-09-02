@@ -14,9 +14,9 @@ const Footer = () => {
             text: "首页"
         },
         {
-            path: "/undone",
+            path: "/memo",
             icon: faBookmark,
-            text: "待办"
+            text: "备忘录"
         }
     ];
 

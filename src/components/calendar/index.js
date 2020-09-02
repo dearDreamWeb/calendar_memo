@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import './index.scss';
 import { DatePicker, Button } from 'antd-mobile';
-import GetLunarDay from "../../utils/lunarCalendar";
+import GetLunarDay from "../../utils/lunarCalendar";  // 农历转换工具
 import "animate.css";
-import Weather from "../weather";
+import Weather from "../weather";                     // Weather组件
+import DayMemo from "../dayMemo";                     // DayMemo组件
 import { ContextData } from "../../useReducer";
+
 
 const Calender = () => {
 
@@ -23,6 +25,8 @@ const Calender = () => {
     const [isShow, setIsShow] = useState(true);                           // 日历表格是否显示
     const [animateState, setAnimateState] = useState(0);                  // 日历动画的状态,0,1,2三种过渡动画
     const [resultDate, setResultDate] = useState({});                     // 最终整合版日期
+    const [memoArr, setMemoArr] = useState([]);                            // 几号的备忘录在itemArr中的下标值
+    const [haveMemo, setHaveMemo] = useState(0);                                  // 选中的日子有多少备忘录，默认是0
 
     let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     let monthDays = new Date(year, month, 0).getDate();                 // 本月有多少天
@@ -35,13 +39,14 @@ const Calender = () => {
         showLunarDay();
         changeItemH();
         setSelectDay(day);
-        findMark();
+
     }, [year, month, day]);
 
 
     // 当每月的开始的下标值变化了说明日期变化了，农历也跟着变化
     useEffect(() => {
         showLunarDay();
+        findMark();
     }, [monthStartIndex])
 
 
@@ -59,6 +64,7 @@ const Calender = () => {
                 times: new Date(year, month - 1, selectDay).getTime()
             }
         ))
+        howMuchMemo()
     }, [year, month, selectDay, monthStartIndex]);
 
     // 向useReducer传递日期数据
@@ -81,13 +87,28 @@ const Calender = () => {
         }, 50)
     }
 
-    // 遍历数据找到在本月的时间的备忘录
+    // 遍历数据找到在本月的时间的备忘录的下标值
     const findMark = () => {
-        let MonthStartTimes = new Date(year, month, 1).getTime();
-        let MonthEndTimes = new Date(year, month + 1, 1).getTime();
-        let arr = state.memoData.filter(item => {
-            
+        let arr = [];
+        state.memoData.forEach(item => {
+            let itemYear = new Date(item.dateStart).getFullYear();
+            let itemMonth = new Date(item.dateStart).getMonth() + 1;
+            let itemDay = new Date(item.dateStart).getDate();
+            if (itemYear === year && itemMonth === month) {
+                try {
+                    itemsArr.forEach((dayItem, i) => {
+                        if (i >= monthStartIndex && dayItem.solar === itemDay) {
+                            arr.push(i);
+                            throw new Error("EndIterative");
+                        }
+                    })
+                } catch (e) {
+                    if (e.message !== "EndIterative") throw e;
+                }
+
+            }
         })
+        setMemoArr(arr);
     }
 
     // 把日期填充进数组
@@ -214,6 +235,21 @@ const Calender = () => {
         setItemsArr(new Array(35));
     }
 
+    // 该天有多少备忘录
+    const howMuchMemo = () => {
+        // 当前选择日子在itemsArr中的下标值
+        let i = selectDay + monthStartIndex - 1;
+        if (!memoArr.includes(i)) return [];
+        let arr = state.memoData.filter(item => {
+            let itemDate = new Date(item.dateStart);
+            if (itemDate.getFullYear() === year && itemDate.getMonth() + 1 === month && itemDate.getDate() === selectDay) {
+                return item;
+            }
+        })
+        // console.log(arr);
+        return arr;
+    }
+
     return (
         <div className="calender">
             {/* 头部 */}
@@ -284,7 +320,14 @@ const Calender = () => {
                                         ? "today animate__rubberBand"
                                         : "selectDay animate__rubberBand"
                                     : ""
+                                } ${
+                                // 判断是否有备忘录
+                                memoArr.includes(index)
+                                    ? "existMemo"
+                                    : ""
+
                                 }`
+
                             }
                             key={index}
                         >
@@ -298,6 +341,13 @@ const Calender = () => {
 
             {/* 天气和农历 */}
             <Weather date={resultDate} isToday={isToday(selectDay)} />
+
+            {/* 当天的备忘录 */}
+            {
+                memoArr.includes(selectDay + monthStartIndex - 1)
+                    ? (<DayMemo memos={howMuchMemo()} />)
+                    : ""
+            }
         </div>
     )
 }

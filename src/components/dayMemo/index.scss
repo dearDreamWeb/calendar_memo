@@ -1,0 +1,96 @@
+@import "../../common/styles/scss/index.scss";
+.day_memo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px 10px;
+  height: 80px;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: $box_shadow;
+  overflow: auto;
+
+  .item {
+    display: flex;
+    height: 60px;
+    border-bottom: $border_lightBlack;
+    // 时间
+    .time {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 10px;
+      .start,
+      .end {
+        font-weight: bold;
+      }
+      .start {
+        padding-bottom: 5px;
+      }
+      // 分割线
+      &::after {
+        content: "";
+        position: absolute;
+        top: 10%;
+        right: 0;
+        width: 1px;
+        height: 80%;
+        background: $light_gray;
+      }
+    }
+    // 内容
+    .content {
+      display: flex;
+      align-items: center;
+      .checkbox {
+        margin: 0 10px;
+      }
+      .text {
+        font-weight: bold;
+      }
+    }
+  }
+
+  // 完成样式
+  .finished {
+    position: relative;
+    color: $lighter_gray !important;
+    .item {
+      .time {
+        &::after {
+          background: $lighter_gray;
+        }
+      }
+    }
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      top: 50%;
+      background-color: $lighter_gray;
+    }
+  }
+  // 复选框初始化样式
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    background-color: $white;
+    -webkit-appearance: none;
+    border: 1px solid #c9c9c9;
+    border-radius: 2px;
+    outline: none;
+  }
+
+  // 复选框选中样式
+  input[type="checkbox"]:checked::before {
+    display: block;
+    content: "\2714";
+    text-align: center;
+    font-size: 16px;
+    color: $lighter_gray;
+  }
+}

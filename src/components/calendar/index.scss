@@ -21,7 +21,7 @@
   .clender_main {
     display: grid;
     grid-template: repeat(5, 1fr) / repeat(7, 1fr);
-    grid-gap: 10px;
+    // grid-gap: 10px;
     justify-items: center;
     align-items: center;
     .item,
@@ -30,8 +30,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 10px;
       font-size: 20px;
       font-weight: bolder;
+      box-sizing: border-box;
     }
     // 日期
     .item {
@@ -55,6 +57,21 @@
     .othersMonth {
       color: $light_gray;
     }
+    // 是否有备忘录
+    .existMemo {
+      position: relative;
+      &::before {
+        content: "·";
+        display: block;
+        position: absolute;
+        top: -4px;
+        text-align: center;
+        width: 100%;
+        font-size: 18px;
+        color: $light_gray;
+      }
+    }
+
     // 选择的日
     .selectDay {
       background-color: $lighter_gray;
@@ -64,6 +81,9 @@
       background-color: #fe8c28;
       color: $white;
       .lunar {
+        color: $white;
+      }
+      &::before {
         color: $white;
       }
     }

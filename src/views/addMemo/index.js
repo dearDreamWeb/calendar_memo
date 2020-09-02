@@ -42,9 +42,19 @@ const AddMemo = props => {
         let dateEndTimes = new Date(dateEnd).getTime();  // 结束时间的毫秒数
         if (flag) {
             dateStartTimes = new Date(date).getTime();
-            dateStartTimes < dateEndTimes
-                ? setDateStart(date)
-                : setDateStart(dateEnd)
+            if (dateStartTimes < dateEndTimes) {
+                setDateStart(date);
+            } else {
+                if (new Date(date).getHours() < 23) {
+                    let hourTimes = 1000 * 60 * 60;
+                    setDateStart(date);
+                    setDateEnd(new Date(dateStartTimes + hourTimes))
+                } else {
+                    setDateStart(date);
+                    setDateEnd(new Date(0,0,0,23,59))
+                }
+
+            }
         } else {
             dateEndTimes = new Date(date).getTime();
             dateStartTimes < dateEndTimes
