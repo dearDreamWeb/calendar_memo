@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 20px;
-  padding: 10px 10px;
+  padding: 0 10px;
   height: 80px;
   background-color: $white;
   border-radius: 10px;
@@ -13,7 +13,8 @@
 
   .item {
     display: flex;
-    height: 60px;
+    min-height: 80px;
+    max-height: 80px;
     border-bottom: $border_lightBlack;
     // 时间
     .time {
@@ -49,29 +50,35 @@
       }
       .text {
         font-weight: bold;
+        &::before {
+          content: "";
+          display: block;
+        }
       }
     }
   }
 
   // 完成样式
   .finished {
-    position: relative;
     color: $lighter_gray !important;
-    .item {
-      .time {
-        &::after {
-          background: $lighter_gray;
-        }
+    font-style: italic;
+    .time {
+      &::after {
+        background: $lighter_gray;
       }
     }
-    &::before {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 1px;
-      position: absolute;
-      top: 50%;
-      background-color: $lighter_gray;
+    .content {
+      position: relative;
+      .text {
+        &::before {
+          content: "";
+          width: 100%;
+          height: 1px;
+          position: absolute;
+          top: 50%;
+          background-color: $lighter_gray;
+        }
+      }
     }
   }
   // 复选框初始化样式
@@ -91,6 +98,6 @@
     content: "\2714";
     text-align: center;
     font-size: 16px;
-    color: $lighter_gray;
+    color: $theme_color;
   }
 }

@@ -39,11 +39,12 @@ const DayMemo = props => {
                     <div className="content">
                         <input
                             type="checkbox"
+                            id={`checkbox${index}`}
                             className="checkbox"
                             defaultChecked={item.isFinished}
                             onChange={() => dispatch({ type: "changeIsFinish", data: { item } })}
                         />
-                        <span className="text">{item.text}</span>
+                        <label className="text" for={`checkbox${index}`}>{item.text}</label>
                     </div>
                 </div>
             ))}
