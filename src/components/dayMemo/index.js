@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { withRouter } from 'react-router-dom';
-// import { List } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import "./index.scss";
 import { ContextData } from "../../useReducer";
@@ -13,11 +12,6 @@ const DayMemo = props => {
 
     // 获取到useContext中存的值
     const { state, dispatch } = useContext(ContextData);
-
-    useEffect(() => {
-        // console.log(props)
-    }, [])
-
 
     return (
         <div className="day_memo">
@@ -44,7 +38,7 @@ const DayMemo = props => {
                             defaultChecked={item.isFinished}
                             onChange={() => dispatch({ type: "changeIsFinish", data: { item } })}
                         />
-                        <label className="text" for={`checkbox${index}`}>{item.text}</label>
+                        <label className="text" htmlFor={`checkbox${index}`}>{item.text}</label>
                     </div>
                 </div>
             ))}

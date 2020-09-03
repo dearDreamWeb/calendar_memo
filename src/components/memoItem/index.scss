@@ -1,0 +1,43 @@
+@import "../../common/styles/scss/index.scss";
+.memoItem_wrap {
+  // 未完成样式
+  .memo_item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    .input_wrap {
+      display: flex;
+      align-items: center;
+      .text {
+        padding-left: 10px;
+      }
+    }
+  }
+  // 完成样式
+  .finished {
+    .text {
+      text-decoration: line-through;
+      color: $lighter_gray;
+      font-style: italic;
+    }
+  }
+  // 复选框初始化样式
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    background-color: $white;
+    -webkit-appearance: none;
+    border: 1px solid $theme_color;
+    border-radius: 2px;
+    outline: none;
+  }
+
+  // 复选框选中样式
+  input[type="checkbox"]:checked::before {
+    display: block;
+    content: "\2714";
+    text-align: center;
+    font-size: 16px;
+    color: $theme_color;
+  }
+}

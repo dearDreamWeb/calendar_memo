@@ -1,9 +1,9 @@
 @import "../../common/styles/scss";
 .App {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 60px);
   background-color: $bg_color;
-  overflow: hidden;
+  overflow-y: auto;
   .header {
     .title {
       display: flex;

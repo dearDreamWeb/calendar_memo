@@ -26,7 +26,6 @@ const Calender = () => {
     const [animateState, setAnimateState] = useState(0);                  // 日历动画的状态,0,1,2三种过渡动画
     const [resultDate, setResultDate] = useState({});                     // 最终整合版日期
     const [memoArr, setMemoArr] = useState([]);                            // 几号的备忘录在itemArr中的下标值
-    const [haveMemo, setHaveMemo] = useState(0);                                  // 选中的日子有多少备忘录，默认是0
 
     let weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     let monthDays = new Date(year, month, 0).getDate();                 // 本月有多少天
