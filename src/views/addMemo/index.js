@@ -51,7 +51,7 @@ const AddMemo = props => {
                     setDateEnd(new Date(dateStartTimes + hourTimes))
                 } else {
                     setDateStart(date);
-                    setDateEnd(new Date(0,0,0,23,59))
+                    setDateEnd(new Date(0, 0, 0, 23, 59))
                 }
 
             }
@@ -90,7 +90,10 @@ const AddMemo = props => {
             tagIndex: selectedIndex,
             dateStart: new Date(year, month, day, dateStart.getHours(), dateStart.getMinutes()),
             dateEnd: new Date(year, month, day, dateEnd.getHours(), dateEnd.getMinutes()),
-            text: inputVal
+            text: inputVal,
+            year,
+            month: month + 1,
+            day
         };
         dispatch({
             type: "add",

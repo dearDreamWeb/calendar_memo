@@ -15,11 +15,23 @@ const Memo = props => {
         { title: '已完成', sub: '3' },
     ];
 
-    useEffect(() => {
-        console.log(props)
-    }, [state.memoData])
+    // useEffect(() => {
+    //     // undoneMemos();
+    //     console.log(state.memoData)
+    // }, [state.memoData])
 
 
+    // 未完成的备忘录
+    const undoneMemos = () => {
+        let arr = state.memoData.filter(item => item.isFinished === false);
+        return arr;
+    }
+
+    // 已完成的备忘录
+    const doneMemos = () => {
+        let arr = state.memoData.filter(item => item.isFinished === true);
+        return arr;
+    }
 
     return (
         <div className="memo">
@@ -60,10 +72,10 @@ const Memo = props => {
                     </ul> */}
                 </div>
                 <div className="tab_content">
-                    Content of second tab
+                    <MemoItem memoData={undoneMemos()} />
                 </div>
                 <div className="tab_content">
-                    Content of third tab
+                    <MemoItem memoData={doneMemos()} />
                 </div>
             </Tabs>
         </div>

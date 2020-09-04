@@ -52,7 +52,7 @@ const reducer = (state, action) => {
         // 改变备忘录完成状态
         case "changeIsFinish":
             let changeItem = action.data.item; //要修改的数据
-            let itemIndex = 0; 
+            let itemIndex = 0;
             // 找到要修改的数据的下标值，并赋值给itemIndex
             state.memoData.forEach((item, index) => {
                 if (item.id === changeItem.id) {

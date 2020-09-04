@@ -7,11 +7,16 @@
   width: 100vw;
   height: calc(100vh - 60px);
   background-color: $white;
+  overflow-y: auto;
   .nav_bar {
     padding: 30px 0;
     border-bottom: $border_lightBlack;
   }
   .tab_content {
     padding: 20px;
+  }
+  // 修改的是 antd-mobile的样式
+  .am-tabs {
+    height: auto;
   }
 }
