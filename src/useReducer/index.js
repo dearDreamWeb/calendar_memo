@@ -63,6 +63,20 @@ const reducer = (state, action) => {
             state.memoData[itemIndex] = changeItem;
             $store.setItem("memoData", [...state.memoData]);
             return { ...state }
+
+        // 删除memoData中的其中一条数据
+        case "deleteMemoItem":
+            let deleteItem = action.data.item; //要删除的数据
+            let deleteItemIndex = 0;
+            // 找到要删除的数据的下标值，并赋值给deleteItemIndex
+            state.memoData.forEach((item, index) => {
+                if (item.id === deleteItem.id) {
+                    deleteItemIndex = index;
+                }
+            })
+            state.memoData.splice(deleteItemIndex, 1);
+            $store.setItem("memoData", [...state.memoData]);
+            return { ...state }
         default:
             return state
     }

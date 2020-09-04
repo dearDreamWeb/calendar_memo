@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Tabs, WingBlank, NavBar, Icon } from "antd-mobile";
+import React, { useContext, useState, useEffect } from "react";
+import { Tabs, NavBar, Icon } from "antd-mobile";
 import "./index.scss";
 import { ContextData } from "../../useReducer";
 import MemoItem from "../../components/memoItem";
@@ -9,6 +9,10 @@ const Memo = props => {
     // 获取到useContext中存的值
     const { state, dispatch } = useContext(ContextData);
 
+    // const [undoneMemos, setUndoneMemos] = useState(state.memoData);
+    // const [doneMemos, setDoneMemos] = useState(state.memoData);
+
+
     const tabs = [
         { title: '全部', sub: '1' },
         { title: '未完成', sub: '2' },
@@ -16,19 +20,20 @@ const Memo = props => {
     ];
 
     // useEffect(() => {
-    //     // undoneMemos();
-    //     console.log(state.memoData)
-    // }, [state.memoData])
+    //     getUndoneMemos();
+    // }, [state])
 
 
     // 未完成的备忘录
-    const undoneMemos = () => {
+    const getUndoneMemos = () => {
+        // let dataArr = undoneMemos;
         let arr = state.memoData.filter(item => item.isFinished === false);
+        // setUndoneMemos(arr);
         return arr;
     }
 
     // 已完成的备忘录
-    const doneMemos = () => {
+    const getDoneMemos = () => {
         let arr = state.memoData.filter(item => item.isFinished === true);
         return arr;
     }
@@ -51,31 +56,12 @@ const Memo = props => {
             >
                 <div className="tab_content">
                     <MemoItem memoData={state.memoData} />
-                    {/* <ul>
-                        {state.memoData.map((item, index) => (
-                            <li key={index}
-                                className={`memo_item ${
-                                    item.isFinished
-                                        ? "finished"
-                                        : ""}`}
-                            >
-                                <input
-                                    type="checkbox"
-                                    id={`checkbox${index}`}
-                                    className="checkbox"
-                                    defaultChecked={item.isFinished}
-                                    onChange={() => dispatch({ type: "changeIsFinish", data: { item } })}
-                                />
-                                <label className="text" htmlFor={`checkbox${index}`}>{item.text}</label>
-                            </li>
-                        ))}
-                    </ul> */}
                 </div>
                 <div className="tab_content">
-                    <MemoItem memoData={undoneMemos()} />
+                    <MemoItem memoData={getUndoneMemos()} />
                 </div>
                 <div className="tab_content">
-                    <MemoItem memoData={doneMemos()} />
+                    <MemoItem memoData={getDoneMemos()} />
                 </div>
             </Tabs>
         </div>

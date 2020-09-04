@@ -4,13 +4,23 @@
   .memo_item {
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    justify-content: space-between;
+    padding-bottom: 30px;
     .input_wrap {
       display: flex;
       align-items: center;
       .text {
         padding-left: 10px;
+        font-size: 14px;
       }
+    }
+    .date {
+      margin-left: auto;
+      padding-right: 10px;
+    }
+    .delete_btn {
+      font-size: 16px;
+      color: $light_gray;
     }
   }
   // 完成样式
@@ -19,6 +29,9 @@
       text-decoration: line-through;
       color: $lighter_gray;
       font-style: italic;
+    }
+    .date {
+      color: $lighter_gray;
     }
   }
   // 复选框初始化样式
