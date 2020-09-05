@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import './index.scss';
 import { WingBlank } from 'antd-mobile';
 import { reducer, ContextData, initData } from "../../useReducer" //引入useReducer文件
@@ -31,13 +31,13 @@ function App() {
           <Router>
             <Switch>
 
-              <Route exact path="/calendar_memo/home" component={Calender} />
+              <Route exact path="/home" component={Calender} />
 
-              <Route path="/calendar_memo/memo" component={Memo} />
+              <Route path="/memo" component={Memo} />
 
-              <Route path="/calendar_memo/addmemo" component={AddMemo} />
+              <Route path="/addmemo" component={AddMemo} />
 
-              <Redirect from='/' to='/calendar_memo/home'></Redirect>
+              <Redirect from='/' to='/home'></Redirect>
             </Switch>
           </Router>
 
