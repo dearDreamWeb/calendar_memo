@@ -9,12 +9,12 @@ const Footer = () => {
     const [locationPath, setLocationPath] = useState("/");  //当前路径
     const lists = [
         {
-            path: "/home",
+            path: "/calendar_memo/home",
             icon: faHome,
             text: "首页"
         },
         {
-            path: "/memo",
+            path: "/calendar_memo/memo",
             icon: faBookmark,
             text: "备忘录"
         }
@@ -37,7 +37,7 @@ const Footer = () => {
             <div className="add_btn">
                 <div
                     className="btn"
-                    onClick={() => jumpPage("/addmemo")}
+                    onClick={() => jumpPage("/calendar_memo/addmemo")}
                 ></div>
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import './index.scss';
 import { WingBlank } from 'antd-mobile';
@@ -31,13 +31,13 @@ function App() {
           <Router>
             <Switch>
 
-              <Route exact path="/home" component={Calender} />
+              <Route exact path="/calendar_memo/home" component={Calender} />
 
-              <Route path="/memo" component={Memo} />
+              <Route path="/calendar_memo/memo" component={Memo} />
 
-              <Route path="/addmemo" component={AddMemo} />
+              <Route path="/calendar_memo/addmemo" component={AddMemo} />
 
-              <Redirect from='/' to='/home'></Redirect>
+              <Redirect from='/' to='/calendar_memo/home'></Redirect>
             </Switch>
           </Router>
 
