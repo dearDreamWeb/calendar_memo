@@ -2,7 +2,7 @@
   "name": "calendar_memo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://dearDreamWeb.io/calendar_memo",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@fortawesome/fontawesome": "^1.1.8",
@@ -75,7 +75,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
