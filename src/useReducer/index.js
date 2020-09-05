@@ -77,6 +77,22 @@ const reducer = (state, action) => {
             state.memoData.splice(deleteItemIndex, 1);
             $store.setItem("memoData", [...state.memoData]);
             return { ...state }
+
+        // 删除memoData中每个子元素中isFinished为true的备忘录，也就是说删除所有已完成的备忘录
+        case "deleteAllDone":
+            let arr = state.memoData.filter(item => {
+                return item.isFinished === true;
+            })
+            arr.forEach(arrItem => {
+                state.memoData.forEach((memoDataItem, index) => {
+                    if (arrItem.id === memoDataItem.id) {
+                        state.memoData.splice(index, 1);
+                    }
+                })
+            })
+            $store.setItem("memoData", [...state.memoData]);
+            return { ...state }
+
         default:
             return state
     }

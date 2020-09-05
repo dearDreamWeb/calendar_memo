@@ -1,5 +1,11 @@
 @import "../../common/styles/scss/index.scss";
 .memoItem_wrap {
+  .clear_done {
+      text-align: right;
+      font-size: 16px;
+      color:$theme_color;
+  }
+
   // 未完成样式
   .memo_item {
     display: flex;
@@ -9,6 +15,10 @@
     .input_wrap {
       display: flex;
       align-items: center;
+      .icon {
+        padding-left: 10px;
+        color: $theme_color;
+      }
       .text {
         padding-left: 10px;
         font-size: 14px;
@@ -25,10 +35,15 @@
   }
   // 完成样式
   .finished {
-    .text {
-      text-decoration: line-through;
-      color: $lighter_gray;
-      font-style: italic;
+    .input_wrap {
+      .icon {
+        color: $lighter_gray;
+      }
+      .text {
+        text-decoration: line-through;
+        color: $lighter_gray;
+        font-style: italic;
+      }
     }
     .date {
       color: $lighter_gray;

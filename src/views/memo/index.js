@@ -13,11 +13,11 @@ const Memo = props => {
     // const [doneMemos, setDoneMemos] = useState(state.memoData);
 
 
-    const tabs = [
-        { title: '全部', sub: '1' },
-        { title: '未完成', sub: '2' },
-        { title: '已完成', sub: '3' },
-    ];
+    // const tabs = [
+    //     { title: '全部', sub: '1' },
+    //     { title: '未完成', sub: '2' },
+    //     { title: '已完成', sub: '3' },
+    // ];
 
     // useEffect(() => {
     //     getUndoneMemos();
@@ -25,18 +25,18 @@ const Memo = props => {
 
 
     // 未完成的备忘录
-    const getUndoneMemos = () => {
-        // let dataArr = undoneMemos;
-        let arr = state.memoData.filter(item => item.isFinished === false);
-        // setUndoneMemos(arr);
-        return arr;
-    }
+    // const getUndoneMemos = () => {
+    //     // let dataArr = undoneMemos;
+    //     let arr = state.memoData.filter(item => item.isFinished === false);
+    //     // setUndoneMemos(arr);
+    //     return arr;
+    // }
 
     // 已完成的备忘录
-    const getDoneMemos = () => {
-        let arr = state.memoData.filter(item => item.isFinished === true);
-        return arr;
-    }
+    // const getDoneMemos = () => {
+    //     let arr = state.memoData.filter(item => item.isFinished === true);
+    //     return arr;
+    // }
 
     return (
         <div className="memo">
@@ -47,23 +47,23 @@ const Memo = props => {
                 icon={<Icon type="left" />}
                 onLeftClick={() => props.history.push("/")}
             >备忘录</NavBar>
-
+            <div className="tab_content">
+                <MemoItem memoData={state.memoData} />
+            </div>
             {/* 标签栏 */}
-            <Tabs tabs={tabs}
+            {/* <Tabs tabs={tabs}
                 initialPage={0}
                 tabBarPosition="top"
                 renderTab={tab => <span>{tab.title}</span>}
             >
-                <div className="tab_content">
-                    <MemoItem memoData={state.memoData} />
-                </div>
+
                 <div className="tab_content">
                     <MemoItem memoData={getUndoneMemos()} />
                 </div>
                 <div className="tab_content">
                     <MemoItem memoData={getDoneMemos()} />
                 </div>
-            </Tabs>
+            </Tabs> */}
         </div>
     )
 }

@@ -22,13 +22,8 @@ const MemoItem = props => {
 
     useEffect(() => {
         sortMemoData();
-    }, [])
-
-    useEffect(() => {
-        // console.log(memoData)
-        // setMemoData(props.memoData);
-        // sortMemoData()
-    }, [props])
+        // console.log(state.icons[0])
+    }, []);
 
     /**
      * 按日期将备忘录进行分组   
@@ -100,7 +95,35 @@ const MemoItem = props => {
         memoData[index].splice(_index, 1);
         setIsShow(false);
         setMemoData(memoData);
-        setIsShow(true);
+        setTimeout(()=>setIsShow(true),0)
+        Toast.success("删除成功", 1);
+    }
+
+    // 派发useReducer事件，删除所有已完成的备忘录
+    const clearAllDone = () => {
+        dispatch({ type: "deleteAllDone" });
+        let arr = state.memoData.filter(item => {
+            return item.isFinished === true;
+        })
+        arr.forEach(arrItem => {
+            memoData.forEach((memoDataItem, index) => {
+                if (arrItem.id === memoDataItem.id) {
+                    memoData.splice(index, 1);
+                    return;
+                }
+                if (memoDataItem.length > 0) {
+                    memoDataItem.forEach((_memoDataItem, _index) => {
+                        if (arrItem.id === _memoDataItem.id) {
+                            memoData[index].splice(_index, 1);
+                            return;
+                        }
+                    })
+                }
+            })
+        })
+        setIsShow(false);
+        setMemoData(memoData);
+        setTimeout(()=>setIsShow(true),0)
         Toast.success("删除成功", 1);
     }
 
@@ -119,6 +142,21 @@ const MemoItem = props => {
 
     return (
         <ul className="memoItem_wrap">
+            {/* 清除已完成的备忘录 */}
+            <p
+                className="clear_done"
+                onClick={() =>
+                    alert('删除', '你确定删除所有已完成的备忘录？', [
+                        {
+                            text: '确定',
+                            onPress: () => clearAllDone()
+                        },
+                        { text: '取消', onPress: () => Toast.info('已取消', 1) },
+
+                    ])
+                }
+            >清除已完成</p>
+
             {/* 第一次遍历各个日期的备忘录 */}
             {isShow && memoData.map((item, index) => (
                 item.length > 0
@@ -141,6 +179,11 @@ const MemoItem = props => {
                                         className="checkbox"
                                         defaultChecked={_item.isFinished}
                                         onChange={() => changeMemo(_item)}
+                                    />
+                                    {/* 图标 */}
+                                    <FontAwesomeIcon
+                                        icon={state.icons[_item.tagIndex].icon}
+                                        className="icon"
                                     />
                                     <label className="text" htmlFor={`checkbox${_item.id}`}>{_item.text}</label>
                                 </div>
