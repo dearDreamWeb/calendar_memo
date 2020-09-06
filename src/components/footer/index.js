@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from "react-router-dom";
 import "./index.scss";
 import { WingBlank } from 'antd-mobile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBookmark } from '@fortawesome/fontawesome-free-solid';
 
 
-const Footer = () => {
+const Footer = props => {
     const [locationPath, setLocationPath] = useState("/");  //当前路径
     const lists = [
         {
@@ -22,12 +23,13 @@ const Footer = () => {
 
 
     useEffect(() => {
-        setLocationPath(window.location.pathname);
+        setLocationPath(props.location.pathname);
+        console.log(props)
     }, [])
 
     // 跳转页面
     const jumpPage = path => {
-        window.location.href = window.location.origin + path;
+        props.history.push(path);
         setLocationPath(path);
     }
 
@@ -63,4 +65,4 @@ const Footer = () => {
         </footer>
     )
 }
-export default Footer;
+export default withRouter(Footer);

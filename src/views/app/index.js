@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import './index.scss';
 import { WingBlank } from 'antd-mobile';
 import { reducer, ContextData, initData } from "../../useReducer" //引入useReducer文件
@@ -7,6 +7,7 @@ import Calender from "../../components/calendar";  // 日历组件
 import DiyFooter from "../../components/footer";   // 底部组件
 import Memo from "../../views/memo";      // 待办
 import AddMemo from "../../views/addMemo";      // 添加备忘录
+import data from "../../../package.json";
 
 function App() {
 
@@ -28,7 +29,6 @@ function App() {
           日历
           </h1>
           </header>
-          <Router>
             <Switch>
 
               <Route exact path="/home" component={Calender} />
@@ -39,7 +39,6 @@ function App() {
 
               <Redirect exact from='/' to='/home'></Redirect>
             </Switch>
-          </Router>
 
           {/* 底部组件 */}
           <DiyFooter />

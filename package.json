@@ -2,7 +2,7 @@
   "name": "calendar_memo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dearDreamWeb.github.io/calendar_memo/",
+  "homepage": "./",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@fortawesome/fontawesome": "^1.1.8",
