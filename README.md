@@ -30,16 +30,16 @@ npm start
 # 项目效果
 
 ## 首页界面
-![首页界面](https://s1.ax1x.com/2020/09/07/wnPiuR.jpg)
+<img src="https://s1.ax1x.com/2020/09/07/wnPiuR.jpg" width="50%" alt="首页界面"/>
 
 ## 选择日期
-![选择日期](https://s1.ax1x.com/2020/09/07/wnPCv9.jpg)
+<img src="https://s1.ax1x.com/2020/09/07/wnPCv9.jpg" width="50%" alt="选择日期"/>
 
 ## 添加备忘录
-![添加备忘录](https://s1.ax1x.com/2020/09/07/wnPFD1.jpg)
+<img src="https://s1.ax1x.com/2020/09/07/wnPFD1.jpg" width="50%" alt="添加备忘录"/>
 
 ## 备忘录界面
-![备忘录界面](https://s1.ax1x.com/2020/09/07/wnPp34.jpg)
+<img src="https://s1.ax1x.com/2020/09/07/wnPp34.jpg" width="50%" alt="备忘录界面"/>
 
 ## 删除备忘录
-![删除备忘录](https://s1.ax1x.com/2020/09/07/wnP9gJ.jpg)
+<img src="https://s1.ax1x.com/2020/09/07/wnP9gJ.jpg" width="50%" alt="删除备忘录"/>
