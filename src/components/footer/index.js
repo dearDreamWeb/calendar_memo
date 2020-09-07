@@ -24,7 +24,6 @@ const Footer = props => {
 
     useEffect(() => {
         setLocationPath(props.location.pathname);
-        console.log(props)
     }, [])
 
     // 跳转页面

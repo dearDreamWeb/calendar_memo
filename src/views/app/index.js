@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer,useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import './index.scss';
 import { WingBlank } from 'antd-mobile';
@@ -7,12 +7,12 @@ import Calender from "../../components/calendar";  // 日历组件
 import DiyFooter from "../../components/footer";   // 底部组件
 import Memo from "../../views/memo";      // 待办
 import AddMemo from "../../views/addMemo";      // 添加备忘录
-import data from "../../../package.json";
 
 function App() {
 
   //  获取是state和dispatch 
   const [state, dispatch] = useReducer(reducer, initData);
+
 
   return (
     // 获取到useContext中存的值
@@ -37,7 +37,7 @@ function App() {
 
               <Route exact path="/addmemo" component={AddMemo} />
 
-              <Redirect exact from='/' to='/home'></Redirect>
+              <Redirect from='/' to='/home'></Redirect>
             </Switch>
 
           {/* 底部组件 */}
