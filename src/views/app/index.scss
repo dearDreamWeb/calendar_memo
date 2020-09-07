@@ -4,6 +4,42 @@
   height: calc(100vh - 60px);
   background-color: $bg_color;
   overflow-y: auto;
+
+  // 不是手机显示的内容
+  .tip-wrap {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+    .tip {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      padding: 20px;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      background: $white;
+      border-radius: 5px;
+      .close {
+        position: absolute;
+        top:15px;
+        right: 15px;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+      .title {
+        font-size: 25px;
+        color: #606266;
+        text-align: center;
+      }
+      .img_wrap {
+        text-align: center;
+      }
+    }
+  }
+
   .header {
     .title {
       display: flex;
