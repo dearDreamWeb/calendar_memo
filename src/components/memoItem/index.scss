@@ -1,5 +1,10 @@
 @import "../../common/styles/scss/index.scss";
 .memoItem_wrap {
+  .title {
+    font-size: 20px;
+    padding-bottom: 20px;
+  }
+
   .clear_done {
       text-align: right;
       font-size: 16px;

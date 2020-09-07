@@ -162,7 +162,7 @@ const MemoItem = props => {
                 item.length > 0
                     ? (<li key={index}>
                         {/* 日期 */}
-                        <h1>{`${item[0].year}-${item[0].month}-${item[0].day}`}</h1>
+                        <h2 className="title">{`${item[0].year}-${item[0].month}-${item[0].day}`}</h2>
                         {/* 第二次遍历该日期下的备忘录 */}
                         {item.map((_item, _index) => (
                             <div key={_index}
